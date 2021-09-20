@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 
-const Header = () => {
+const Header = (props) => {
   const [isChecked, setIsChecked] = useState(false);
-  // const [theme, setTheme] = useState({})
+  function changeColor() {
+    isChecked
+      ? props.style({ backgroundColor: "red" })
+      : props.style({ backgroundColor: "blue" });
+
+    setIsChecked(!isChecked);
+  }
+
   useEffect(() => {}, [isChecked]);
 
   return (
@@ -18,25 +25,24 @@ const Header = () => {
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault1"
+                  value="red"
                   checked={isChecked}
-                  onChange={() => {
-                    setIsChecked(!isChecked);
-                  }}
+                  onChange={changeColor}
                 />
                 <label className="form-check-label" htmlFor="flexRadioDefault1">
                   Blue
                 </label>
               </div>
-              <div className="form-check">
+
+              <div className="form-check" style={{ marginLeft: "10px" }}>
                 <input
                   className="form-check-input"
                   type="radio"
+                  value="blue"
                   name="flexRadioDefault"
                   id="flexRadioDefault2"
-                  checked={isChecked}
-                  onChange={() => {
-                    setIsChecked(!isChecked);
-                  }}
+                  checked={!isChecked}
+                  onChange={changeColor}
                 />
                 <label className="form-check-label" htmlFor="flexRadioDefault2">
                   Red

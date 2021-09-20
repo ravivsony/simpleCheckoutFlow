@@ -1,4 +1,8 @@
-div #cart {
-  position: relative;
-  min-height: 80vh;
+#cart {
+  position: sticky;
+  top: 100%;
+}
+.anythingg {
+  /* border: 2px solid black; */
+  height: 79.5vh;
 }
