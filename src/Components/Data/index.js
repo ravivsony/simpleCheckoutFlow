@@ -1,4 +1,4 @@
-export const Data = [
+const Data = [
   { id: 1, product: "Mobile" },
   { id: 2, product: "Refrigerator" },
   { id: 3, product: "Washing Mashine" },
@@ -7,3 +7,4 @@ export const Data = [
   { id: 6, product: "Jewellery" },
   { id: 7, product: "Microwave" },
 ];
+export default Data;
