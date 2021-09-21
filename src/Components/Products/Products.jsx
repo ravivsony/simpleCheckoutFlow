@@ -5,32 +5,37 @@ import "./product.css";
 
 const Products = (props) => {
   const [products, setProducts] = useState([]);
-  // const isChecked = false;
-
   const [input, setInput] = useState("");
-
-  // const productList = [];
+  const [searchedItem, setSearchedItem] = useState([]);
+  let productsList = [];
   useEffect(() => {
     fetch("/api/mobiles")
       .then((response) => response.json())
       .then((json) => setProducts(json.mobiles))
       .catch((err) => console.log(err));
   }, []);
+  const [select, setSelect] = useState(products.select);
 
-  // function submit(e) {
-  //   e.preventDefault();
-  //   if (input !== "") {
-  //     for (let item of products) {
-  //       item.text = item.text.toLowerCase();
-  //       if (item.text.includes(input.toLowerCase())) {
-  //         productList.push(item);
-  //       }
-  //     }
-  //   }
-  // }
-  // console.log(productList);
+  function search(e) {
+    e.preventDefault();
+    if (e.target.value !== "") {
+      productsList = products.filter((item) => {
+        return item.mobile.toLowerCase() === input.toLowerCase();
+      });
+    }
 
-  function addInCart(e, item) {
+    setSearchedItem(productsList);
+  }
+
+  function addToCart() {
+    return products
+      ? products.map((item) => {
+          console.log(item, item.select);
+        })
+      : "";
+  }
+
+  function checkBoxHandler(e, item) {
     let checked = e.target.checked;
     setProducts(
       products.map((data) => {
@@ -45,7 +50,7 @@ const Products = (props) => {
     <div className="col-6">
       <div className="d-flex flex-column align-self-end ">
         <div>
-          <form class="d-flex w-100 my-1">
+          <form class="d-flex w-100 my-1" onSubmit={(e) => search(e)}>
             <input
               class="form-control me-2"
               type="search"
@@ -63,8 +68,8 @@ const Products = (props) => {
           </form>
         </div>
         <div className="anything">
-          {products ? (
-            products.map((item, id) => {
+          {searchedItem ? (
+            searchedItem.map((item, id) => {
               return (
                 <>
                   <div className="d-flex">
@@ -73,9 +78,9 @@ const Products = (props) => {
                         className="form-check-input"
                         type="checkbox"
                         value=""
-                        checked={item.select}
+                        checked={select}
                         id="flexCheckDefault"
-                        onChange={(e) => addInCart(e)}
+                        onChange={(e) => checkBoxHandler(e)}
                       />
                       <label
                         className="form-check-label"
@@ -92,10 +97,12 @@ const Products = (props) => {
           ) : (
             <></>
           )}
+
           <button
             className="btn w-100 text-light "
             style={props.style}
             id="add"
+            onClick={addToCart}
           >
             ADD TO CART{" "}
           </button>
