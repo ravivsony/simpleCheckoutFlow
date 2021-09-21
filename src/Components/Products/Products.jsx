@@ -5,9 +5,9 @@ import "./product.css";
 
 const Products = (props) => {
   const [products, setProducts] = useState([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(""); //search bar
   const [searchedItem, setSearchedItem] = useState([]);
-  let productsList = [];
+
   useEffect(() => {
     fetch("/api/mobiles")
       .then((response) => response.json())
@@ -19,12 +19,13 @@ const Products = (props) => {
   function search(e) {
     e.preventDefault();
     if (e.target.value !== "") {
-      productsList = products.filter((item) => {
-        return item.mobile.toLowerCase() === input.toLowerCase();
-      });
+      setSearchedItem(
+        ...searchedItem,
+        products.filter((item) => {
+          return item.mobile.toLowerCase() === input.toLowerCase();
+        })
+      );
     }
-
-    setSearchedItem(productsList);
   }
 
   function addToCart() {
@@ -50,7 +51,7 @@ const Products = (props) => {
     <div className="col-6">
       <div className="d-flex flex-column align-self-end ">
         <div>
-          <form class="d-flex w-100 my-1" onSubmit={(e) => search(e)}>
+          <form class="d-flex w-100 my-1" onSubmit={search}>
             <input
               class="form-control me-2"
               type="search"
