@@ -2,12 +2,15 @@ import { createServer } from "miragejs";
 createServer({
   routes() {
     this.namespace = "api";
-    this.get("reminders", () => {
+    this.get("mobiles", () => {
       return {
-        reminders: [
-          { id: 1, text: "Walk the dog" },
-          { id: 2, text: "Take out the trash" },
-          { id: 3, text: "Work out" },
+        mobiles: [
+          { id: 1, mobile: "Nokia", select: false },
+          { id: 2, mobile: "Iphone", select: false },
+          { id: 3, mobile: "Samsung", select: false },
+          { id: 4, mobile: "Xiomi", select: false },
+          { id: 5, mobile: "Vivo", select: false },
+          { id: 6, mobile: "Oppo", select: false },
         ],
       };
     });

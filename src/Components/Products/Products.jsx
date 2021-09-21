@@ -5,41 +5,47 @@ import "./product.css";
 
 const Products = (props) => {
   const [products, setProducts] = useState([]);
-  const isChecked = false;
+  // const isChecked = false;
+
   const [input, setInput] = useState("");
 
-  const productList = [];
+  // const productList = [];
   useEffect(() => {
-    fetch("/api/reminders")
+    fetch("/api/mobiles")
       .then((response) => response.json())
-      .then((json) => setProducts(json.reminders))
+      .then((json) => setProducts(json.mobiles))
       .catch((err) => console.log(err));
   }, []);
 
-  function submit(e) {
-    e.preventDefault();
-    if (input !== "") {
-      for (let item of products) {
-        item.text = item.text.toLowerCase();
-        if (item.text.includes(input.toLowerCase())) {
-          productList.push(item);
-        }
-      }
-    }
-  }
-  console.log(productList);
+  // function submit(e) {
+  //   e.preventDefault();
+  //   if (input !== "") {
+  //     for (let item of products) {
+  //       item.text = item.text.toLowerCase();
+  //       if (item.text.includes(input.toLowerCase())) {
+  //         productList.push(item);
+  //       }
+  //     }
+  //   }
+  // }
+  // console.log(productList);
 
-  function addToCart(item) {
-    if (cart !== null && isChecked === true) {
-      cart.push(item);
-    }
+  function addInCart(e, item) {
+    let checked = e.target.checked;
+    setProducts(
+      products.map((data) => {
+        if (item.id === data.id) {
+          data.select = checked;
+        }
+      })
+    );
   }
 
   return (
     <div className="col-6">
       <div className="d-flex flex-column align-self-end ">
         <div>
-          <form class="d-flex w-100 my-1" onSubmit={submit}>
+          <form class="d-flex w-100 my-1">
             <input
               class="form-control me-2"
               type="search"
@@ -57,8 +63,8 @@ const Products = (props) => {
           </form>
         </div>
         <div className="anything">
-          {productList ? (
-            productList.map((item, id) => {
+          {products ? (
+            products.map((item, id) => {
               return (
                 <>
                   <div className="d-flex">
@@ -67,8 +73,9 @@ const Products = (props) => {
                         className="form-check-input"
                         type="checkbox"
                         value=""
-                        checked={isChecked}
+                        checked={item.select}
                         id="flexCheckDefault"
+                        onChange={(e) => addInCart(e)}
                       />
                       <label
                         className="form-check-label"
@@ -76,7 +83,7 @@ const Products = (props) => {
                       ></label>
                     </div>
                     <div>
-                      <h4 key={id}>{item.text}</h4>
+                      <h4 key={id}>{item.mobile}</h4>
                     </div>
                   </div>
                 </>
@@ -89,7 +96,6 @@ const Products = (props) => {
             className="btn w-100 text-light "
             style={props.style}
             id="add"
-            onClick={addToCart}
           >
             ADD TO CART{" "}
           </button>
