@@ -1,108 +1,127 @@
 import React, { useState, useEffect } from "react";
-import cart from "../CartData";
-
 import "./product.css";
 
-const Products = (props) => {
-  const [products, setProducts] = useState([]);
-  const [input, setInput] = useState(""); //search bar
-  const [searchedItem, setSearchedItem] = useState([]);
+const Products = ({products,style,addSelectedMobilesInCart,selectedMobiles}) => {
+
+  const [state, setState] = useState({
+    selectedMobiles:[],
+    input:'',
+    searchedItem:[]
+  })
 
   useEffect(() => {
-    fetch("/api/mobiles")
-      .then((response) => response.json())
-      .then((json) => setProducts(json.mobiles))
-      .catch((err) => console.log(err));
-  }, []);
-  const [select, setSelect] = useState(products.select);
+    setState({...state,selectedMobiles:selectedMobiles})
+  }, [selectedMobiles])
+  
 
-  function search(e) {
+  function handleSearch(e) {
     e.preventDefault();
     if (e.target.value !== "") {
-      setSearchedItem(
-        ...searchedItem,
-        products.filter((item) => {
-          return item.mobile.toLowerCase() === input.toLowerCase();
-        })
-      );
-    }
-  }
+      setState({...state,searchedItem:products.filter(item => item.mobile== state.input)})}}
 
   function addToCart() {
-    return products
-      ? products.map((item) => {
-          console.log(item, item.select);
-        })
-      : "";
+    addSelectedMobilesInCart(state.selectedMobiles)
+
+    var x = document.getElementsByClassName("form-check-input");
+      for(let i=0; i<=x.length; i++) {
+        x[i].checked = false;
+      }
+
   }
 
   function checkBoxHandler(e, item) {
-    let checked = e.target.checked;
-    setProducts(
-      products.map((data) => {
-        if (item.id === data.id) {
-          data.select = checked;
+    let temp=[...products]
+    let array=[...state.selectedMobiles]
+      if(e.target.checked){
+        temp[item.id]={
+          id:item.id,
+          mobile:item.mobile,
+          selected:true
         }
-      })
-    );
+          if(temp[item.id].selected){
+            array.push(temp[item.id])
+          }
+        setState({...state,selectedMobiles:array})
+      }
   }
 
   return (
     <div className="col-6">
       <div className="d-flex flex-column align-self-end ">
         <div>
-          <form class="d-flex w-100 my-1" onSubmit={search}>
+          <form class="d-flex w-100 my-1" onSubmit={handleSearch}>
             <input
               class="form-control me-2"
               type="search"
-              placeholder="Enter the Products"
+              placeholder="Search the mobile model"
               aria-label="Search"
-              value={input}
+              value={state.input}
               onChange={(e) => {
-                setInput(e.target.value);
+                setState({...state,input:e.target.value});
               }}
               autoComplete="off"
             />
-            <button class="btn text-light " style={props.style} type="submit">
+            <button class="btn text-light " style={style} type="submit">
               Search
             </button>
           </form>
         </div>
         <div className="anything">
-          {searchedItem ? (
-            searchedItem.map((item, id) => {
-              return (
-                <>
-                  <div className="d-flex">
+        {!state.input && products? products.map((item)=>{
+          return (
+            <div className="d-flex">
                     <div className="form-check my-1">
+                    <label
+                        className="form-check-label"
+                        htmlFor={item.mobile}
+                      >
                       <input
                         className="form-check-input"
                         type="checkbox"
                         value=""
-                        checked={select}
-                        id="flexCheckDefault"
-                        onChange={(e) => checkBoxHandler(e)}
+                        checked={products.find(item=>state.selectedMobiles[state.selectedMobiles.indexOf(item.id)] && state.selectedMobiles[state.selectedMobiles.indexOf(item.id)].id)}
+                        id={item.mobile}
+                        onChange={(e) => checkBoxHandler(e,item)}
                       />
-                      <label
-                        className="form-check-label"
-                        for="flexCheckDefault"
-                      ></label>
+                      </label>
                     </div>
                     <div>
-                      <h4 key={id}>{item.mobile}</h4>
+                      <h4 className="mobileName" key={item.id}>{item.mobile}</h4>
+                    </div>
+                  </div>
+          )
+        }) :
+        state.searchedItem.map((item, id) => {
+              return (
+                <>
+                  <div className="d-flex">
+                    <div className="form-check my-1">
+                    <label
+                        className="form-check-label"
+                        htmlFor={item.mobile}
+                      >
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value=""
+                        checked={products.find(item=>state.selectedMobiles[state.selectedMobiles.indexOf(item.id)] && state.selectedMobiles[state.selectedMobiles.indexOf(item.id)].id)}
+                        id={item.mobile}
+                        onChange={(e) => checkBoxHandler(e,item)}
+                      />
+                
+
+                      </label>
+                    </div>
+                    <div>
+                      <h4 className="mobileName"  key={id}>{item.mobile}</h4>
                     </div>
                   </div>
                 </>
               );
-            })
-          ) : (
-            <></>
-          )}
-
-          <button
-            className="btn w-100 text-light "
-            style={props.style}
-            id="add"
+            })} 
+        <button
+            className="btn w-100 text-light  bottomBtn"
+            style={style}
             onClick={addToCart}
           >
             ADD TO CART{" "}

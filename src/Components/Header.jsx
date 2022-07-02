@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-const Header = (props) => {
+const Header = ({setMyStyle}) => {
   const [isChecked, setIsChecked] = useState(false);
+  
   function changeColor() {
     isChecked
-      ? props.style({ backgroundColor: "red" })
-      : props.style({ backgroundColor: "blue" });
+      ? setMyStyle({ backgroundColor: "#e02020" })
+      : setMyStyle({ backgroundColor: "#1877f2" });
 
     setIsChecked(!isChecked);
   }
@@ -25,7 +26,7 @@ const Header = (props) => {
                   type="radio"
                   name="flexRadioDefault"
                   id="flexRadioDefault1"
-                  value="red"
+                  value="#e02020"
                   checked={isChecked}
                   onChange={changeColor}
                 />
@@ -38,7 +39,7 @@ const Header = (props) => {
                 <input
                   className="form-check-input"
                   type="radio"
-                  value="blue"
+                  value="#1877f2"
                   name="flexRadioDefault"
                   id="flexRadioDefault2"
                   checked={!isChecked}

@@ -1,8 +1,15 @@
-#add {
+.bottomBtn {
   position: sticky;
   top: 100%;
+  font-weight: 500 !important;
 }
+
 .anything {
-  /* border: 2px solid black; */
-  height: 79vh;
+  position: relative;
+  min-height: 80vh;
 }
+
+.mobileName{
+  text-transform: capitalize;
+}
+

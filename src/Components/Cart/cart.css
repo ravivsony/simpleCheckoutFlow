@@ -1,8 +1,18 @@
-#cart {
+.bottomBtn {
   position: sticky;
   top: 100%;
 }
-.anythingg {
-  /* border: 2px solid black; */
-  height: 79.5vh;
+
+.anythingg{
+  position: relative;
+  min-height: 80.5vh;
+}
+.mobileName{
+  text-transform: capitalize;
+}
+.emptyCart{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
 }
