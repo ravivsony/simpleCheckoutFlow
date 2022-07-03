@@ -20,6 +20,11 @@ const Layout = () => {
   const addSelectedMobilesInCart=(selectedMobiles)=>{
     setState({...state,selectedMobiles:selectedMobiles})
   }
+  const deleteMobileInCart=(id)=>{
+    let array=[...state.selectedMobiles]
+    array= array.filter(item=>item.id!==id)
+    setState({...state,selectedMobiles:array})
+  }
 
   return (
     <div className=" container min-vh-100">
@@ -27,7 +32,7 @@ const Layout = () => {
       <div className="container d-flex flex-column ">
         <div className="row ">
           <Products style={myStyle} products={state.products} selectedMobiles={state.selectedMobiles} addSelectedMobilesInCart={addSelectedMobilesInCart} />
-          <Cart style={myStyle} selectedMobiles={state.selectedMobiles} addSelectedMobilesInCart={addSelectedMobilesInCart} />
+          <Cart style={myStyle} selectedMobiles={state.selectedMobiles} addSelectedMobilesInCart={addSelectedMobilesInCart} deleteMobileInCart={deleteMobileInCart} />
         </div>
       </div>
     </div>

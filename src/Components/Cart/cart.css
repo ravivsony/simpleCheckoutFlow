@@ -5,7 +5,11 @@
 
 .anythingg{
   position: relative;
-  min-height: 80.5vh;
+  max-height: 73.5vh;
+  overflow-y: scroll;
+}
+.anythingg::-webkit-scrollbar {
+  display: none;
 }
 .mobileName{
   text-transform: capitalize;
