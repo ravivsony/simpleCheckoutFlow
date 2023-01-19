@@ -18,12 +18,32 @@ const Layout = () => {
   }, []);
 
   const addSelectedMobilesInCart=(selectedMobiles)=>{
+    let alreadyInCart = selectedMobiles.some((item, index) => {
+      return selectedMobiles.indexOf(item) !== index
+  });
+  if(alreadyInCart){
+    alert('Already in Cart')
+    setState({...state,selectedMobiles:[...state.selectedMobiles.filter(obj=>selectedMobiles.map(item=>item.mobile).includes(obj.mobile))]})
+  } else{
     setState({...state,selectedMobiles:selectedMobiles})
   }
+  }
+  
   const deleteMobileInCart=(id)=>{
     let array=[...state.selectedMobiles]
     array= array.filter(item=>item.id!==id)
     setState({...state,selectedMobiles:array})
+  }
+
+  const filterProducts=(input)=>{
+    if(input!==''){
+    setState({...state,products:state.products && state.products.filter(item=>item.mobile.includes(input))})
+    } else{
+      fetch("/api/mobiles")
+      .then((response) => response.json())
+      .then((json) => setState({...state,products:json.mobiles}))
+      .catch((err) => console.log(err));
+    }
   }
 
   return (
@@ -31,7 +51,7 @@ const Layout = () => {
       <Header setMyStyle={setMyStyle} />
       <div className="container d-flex flex-column ">
         <div className="row ">
-          <Products style={myStyle} products={state.products} selectedMobiles={state.selectedMobiles} addSelectedMobilesInCart={addSelectedMobilesInCart} />
+          <Products style={myStyle} filterProducts={filterProducts} products={state.products} selectedMobiles={state.selectedMobiles} addSelectedMobilesInCart={addSelectedMobilesInCart} />
           <Cart style={myStyle} selectedMobiles={state.selectedMobiles} addSelectedMobilesInCart={addSelectedMobilesInCart} deleteMobileInCart={deleteMobileInCart} />
         </div>
       </div>

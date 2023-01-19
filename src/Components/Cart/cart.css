@@ -5,7 +5,7 @@
 
 .anythingg{
   position: relative;
-  max-height: 73.5vh;
+  height: 65vh;
   overflow-y: scroll;
 }
 .anythingg::-webkit-scrollbar {

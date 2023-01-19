@@ -15,7 +15,16 @@ createServer({
           { id: 7, mobile: "poco", selected: false },
           { id: 8, mobile: "lava", selected: false },
           { id: 9, mobile: "redmi", selected: false },
-
+          { id: 10, mobile: "nothing", selected: false },
+          { id: 11, mobile: "motorola", selected: false },
+          { id: 12, mobile: "intex", selected: false },
+          { id: 13, mobile: "sony", selected: false },
+          { id: 14, mobile: "honor", selected: false },
+          { id: 15, mobile: "reliance", selected: false },
+          { id: 16, mobile: "jio", selected: false },
+          { id: 17, mobile: "lg", selected: false },
+          { id: 18, mobile: "realme", selected: false },
+          { id: 19, mobile: "asus", selected: false },
         ],
       };
     });

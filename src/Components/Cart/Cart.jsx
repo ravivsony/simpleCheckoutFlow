@@ -45,7 +45,7 @@ const Cart = ({selectedMobiles,style,addSelectedMobilesInCart,deleteMobileInCart
       
         </div>
         <button
-            className="btn  w-100 text-light bottomBtn  "
+            className="btn  w-100 text-light bottomBtn position-sticky "
             style={style}
             onClick={clearCart}
           >
