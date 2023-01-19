@@ -1,3 +1,3 @@
-This is a Simple Checkout Flow project based on ReactJs
+A project with a simple checkout flow where we may search, choose, and check out while also changing the theme.
 
-Deplaoyed here: https://62c11a6f6049b94609ddab8d--earnest-gingersnap-e0b204.netlify.app/
+Deplaoyed here: https://celadon-platypus-965473.netlify.app/
